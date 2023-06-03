@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { dataImage } from "./HomeGallery";
 
 function ImageGallery() {
+  const [category, setCategory] = useState("");
+
   return (
     <>
       <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">
@@ -15,6 +17,7 @@ function ImageGallery() {
               type="radio"
               value=""
               name="list-radio"
+              onClick={() => setCategory("")}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
             />
             <label
@@ -32,6 +35,7 @@ function ImageGallery() {
               type="radio"
               value=""
               name="list-radio"
+              onClick={() => setCategory("nature")}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
             />
             <label
@@ -49,6 +53,7 @@ function ImageGallery() {
               type="radio"
               value=""
               name="list-radio"
+              onClick={() => setCategory("sport")}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
             />
             <label
@@ -66,6 +71,7 @@ function ImageGallery() {
               type="radio"
               value=""
               name="list-radio"
+              onClick={() => setCategory("fruit")}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
             />
             <label
@@ -83,6 +89,7 @@ function ImageGallery() {
               type="radio"
               value=""
               name="list-radio"
+              onClick={() => setCategory("animal")}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
             />
             <label
@@ -96,7 +103,7 @@ function ImageGallery() {
       </ul>
       <div className="gallery">
         {dataImage
-          .filter((data) => data.category === "animal")
+          .filter((data) => data.category === category)
           .map((item, index) => {
             return (
               <div className="cardImage" key={index}>
