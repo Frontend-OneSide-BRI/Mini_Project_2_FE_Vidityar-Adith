@@ -1,6 +1,5 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 export default function ModalLogin({ isOpen, handleOpen }) {
   const cancelButtonRef = useRef(null);
@@ -37,47 +36,55 @@ export default function ModalLogin({ isOpen, handleOpen }) {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                  <div className="sm:flex sm:items-start">
-                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                      <ExclamationTriangleIcon
-                        className="h-6 w-6 text-red-600"
-                        aria-hidden="true"
+                <div className="bg-gray-800 border border-gray-700 rounded-lg border border-gray-200 rounded-lg px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                  <form>
+                    <h5 className="text-xl font-medium text-white border-b border-b-2 pb-3">
+                      Log in to your account
+                    </h5>
+                    <div className="mb-6">
+                      <label
+                        htmlFor="email"
+                        className="block mb-2 text-sm font-medium text-white mt-4"
+                      >
+                        Email address
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        className="bg-gray-700 border border-gray-600 text-[#27f527] text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
+                        placeholder="name@flowbite.com"
+                        required
                       />
                     </div>
-                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-base font-semibold leading-6 text-gray-900"
+                    <div className="mb-6">
+                      <label
+                        htmlFor="password"
+                        className="block mb-2 text-sm font-medium text-white"
                       >
-                        Deactivate account
-                      </Dialog.Title>
-                      <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          Are you sure you want to deactivate your account? All
-                          of your data will be permanently removed. This action
-                          cannot be undone.
-                        </p>
-                      </div>
+                        Password
+                      </label>
+                      <input
+                        type="password"
+                        id="password"
+                        className="bg-gray-700 border border-gray-600 text-[#27f527] text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
+                        required
+                      />
                     </div>
-                  </div>
-                </div>
-                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <button
-                    type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    onClick={handleOpen}
-                  >
-                    Deactivate
-                  </button>
-                  <button
-                    type="button"
-                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                    onClick={handleOpen}
-                    ref={cancelButtonRef}
-                  >
-                    Cancel
-                  </button>
+                    <button
+                      type="button"
+                      className="text-white bg-gray-700 hover:bg-gray-500 focus:ring-2 focus:outline-none focus:ring-green-800 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mr-3"
+                      onClick={handleOpen}
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="submit"
+                      className="text-white bg-green-600 hover:bg-green-700 focus:ring-2 focus:outline-none focus:ring-green-800 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+                      onClose={handleOpen}
+                    >
+                      Submit
+                    </button>
+                  </form>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

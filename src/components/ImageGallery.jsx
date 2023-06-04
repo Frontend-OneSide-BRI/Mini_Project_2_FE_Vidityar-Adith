@@ -1,126 +1,81 @@
-import React, { useState } from "react";
-import { dataImage } from "./HomeGallery";
+import React, { useEffect, useState } from "react";
+import { dataImage } from "../store/imageData";
+import "./gallery.css";
 
-function ImageGallery() {
-  const [category, setCategory] = useState("");
+function ImageGallery({ isFilter, isSearch }) {
+  const [filterImage, setFilterImage] = useState(dataImage);
+  const [modal, setModal] = useState(false);
+  const [tempImg, setTempImg] = useState("");
+
+  const filterData = (isFilter, isSearch) => {
+    const result = dataImage.filter((item) => {
+      const matchInput = item.title
+        .toLowerCase()
+        .includes(isSearch.toLowerCase());
+      const matchSelect = isFilter === "" || item.category === isFilter;
+      return matchInput && matchSelect;
+    });
+
+    setFilterImage(result);
+  };
+
+  useEffect(() => {
+    filterData(isFilter, isSearch);
+  }, [isFilter, isSearch]);
+
+  const getImg = (imgsrc) => {
+    setTempImg(imgsrc);
+    setModal(true);
+  };
 
   return (
     <>
-      <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">
-        Identification
-      </h3>
-      <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-        <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-          <div className="flex items-center pl-3">
-            <input
-              id="horizontal-list-radio-license"
-              type="radio"
-              value=""
-              name="list-radio"
-              onClick={() => setCategory("")}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-            />
-            <label
-              htmlFor="horizontal-list-radio-license"
-              className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              {"ALL"}
-            </label>
-          </div>
-        </li>
-        <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-          <div className="flex items-center pl-3">
-            <input
-              id="horizontal-list-radio-id"
-              type="radio"
-              value=""
-              name="list-radio"
-              onClick={() => setCategory("nature")}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-            />
-            <label
-              htmlFor="horizontal-list-radio-id"
-              className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              NATURE
-            </label>
-          </div>
-        </li>
-        <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-          <div className="flex items-center pl-3">
-            <input
-              id="horizontal-list-radio-millitary"
-              type="radio"
-              value=""
-              name="list-radio"
-              onClick={() => setCategory("sport")}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-            />
-            <label
-              htmlFor="horizontal-list-radio-millitary"
-              className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              SPORT
-            </label>
-          </div>
-        </li>
-        <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-          <div className="flex items-center pl-3">
-            <input
-              id="horizontal-list-radio-fruit"
-              type="radio"
-              value=""
-              name="list-radio"
-              onClick={() => setCategory("fruit")}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-            />
-            <label
-              htmlFor="horizontal-list-radio-fruit"
-              className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              FRUIT
-            </label>
-          </div>
-        </li>
-        <li className="w-full dark:border-gray-600">
-          <div className="flex items-center pl-3">
-            <input
-              id="horizontal-list-radio-passport"
-              type="radio"
-              value=""
-              name="list-radio"
-              onClick={() => setCategory("animal")}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-            />
-            <label
-              htmlFor="horizontal-list-radio-passport"
-              className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              ANIMAL
-            </label>
-          </div>
-        </li>
-      </ul>
-      <div className="gallery">
-        {dataImage
-          .filter((data) => data.category === category)
-          .map((item, index) => {
+      <div className={modal ? "modalOpen z-10" : "modal"}>
+        <img src={tempImg} alt="img Modal" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 50 50"
+          width="50px"
+          height="50px"
+          className="cursor-pointer"
+          onClick={() => setModal(false)}
+        >
+          <path
+            fill="currentColor"
+            d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"
+          />
+        </svg>
+      </div>
+      <div className="mb-8">
+        <div className="grid lg:grid-cols-4 gap-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 z-0">
+          {filterImage.map((item, index) => {
             return (
-              <div className="cardImage" key={index}>
-                <div className="cardImageItem card">
+              <div
+                className="border rounded-lg shadow bg-gray-800 border-gray-700 hover:opacity-80"
+                key={index}
+                onClick={() => getImg(item.src)}
+              >
+                <div className="flex flex-col h-full">
                   <img
+                    className="object-cover rounded-t-lg h-80 w-auto"
                     src={item.src}
-                    className="card-img-top"
-                    style={{ height: "170px", objectFit: "cover" }}
-                    alt="gmbr"
+                    alt=""
                   />
-                  <div className="card-body">
-                    <p className="card-text">{item.title}</p>
+                  <div className="p-5">
+                    <div>
+                      <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {item.title}
+                      </h5>
+                    </div>
+                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                      Lorem ipsum dolor sit amet.
+                    </p>
                   </div>
                 </div>
               </div>
             );
           })}
+        </div>
       </div>
     </>
   );
